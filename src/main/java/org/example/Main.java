@@ -36,6 +36,7 @@ public class Main {
         constraints.gridwidth = 2;
         frame1.add(etiquetaMonto, constraints);
 
+
         JTextField campoMonto = new JTextField(10);
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -227,16 +228,14 @@ public class Main {
 
         frame2.setVisible(true);
     }
-
-
 }
 
 class ConsultaAPI {
     private static final String API_URL = "https://v6.exchangerate-api.com/v6/bfe0da309c2ebeac4ae27839/latest/";
-
+    // PEN / USD
     public double convertCurrency(String origin, String destination) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String requestUrl = API_URL + origin;
+        String requestUrl = API_URL + origin; // PEN -> https://v6.exchangerate-api.com/v6/bfe0da309c2ebeac4ae27839/latest/PEN
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestUrl))
@@ -248,6 +247,6 @@ class ConsultaAPI {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
         JsonObject conversionRates = jsonObject.getAsJsonObject("conversion_rates");
-        return conversionRates.get(destination).getAsDouble();
+        return conversionRates.get(destination).getAsDouble(); // 1
     }
 }
